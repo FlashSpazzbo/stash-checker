@@ -30,6 +30,10 @@ String.prototype.substringBefore = function (this: string, separator: string): s
     }
 }
 
+String.prototype.isBlank = function (this: string): boolean {
+    return this.trim() === "";
+}
+
 String.prototype.isEmpty = function (this: string): boolean {
     return this === "";
 }

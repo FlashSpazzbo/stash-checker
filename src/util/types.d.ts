@@ -17,6 +17,7 @@ declare interface Element {
 declare interface String {
     substringAfter(separator: string): string;
     substringBefore(separator: string): string;
+    isBlank(): boolean;
     isEmpty(): boolean;
     hasKana(): boolean;
     hasKanji(): boolean;

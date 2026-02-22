@@ -14,7 +14,7 @@ export async function runStashChecker() {
     console.info("Running Stash Checker")
     let currentSite = () => window.location.href
     let closestUrl = (e: Element) => e.closest("a")?.href
-    let directChildTextNode = (e: Element | null | undefined) => Array.from(e?.childNodes ?? []).find(n => n.isText())
+    let directChildTextNode = (e: Element | null | undefined) => Array.from(e?.childNodes ?? []).find(n => n.isText() && !n.textContent?.isBlank())
 
     switch (window.location.host) {
         case "www.iwara.tv": {
@@ -545,10 +545,18 @@ export async function runStashChecker() {
         case "www.hegre.com": {
             check(Target.Scene, "a.playable:not(.artwork)[href*='/films/']", {
                 observe: true,
-                displaySelector: e => Array.from(e.querySelector('h4')?.childNodes ?? []).find(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
+                urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+                titleSelector: e => e.textContent,
+                displaySelector: e => directChildTextNode(e.querySelector('h4'))
             });
-            check(Target.Gallery, "a[href*='/photos/']", {observe: true});
-            check(Target.Performer, "a[href*='/models/']:not(.filter):not([href*='#'])", {observe: true});
+            check(Target.Gallery, "a[href*='/photos/']:not([href*='#'])", {
+                observe: true,
+                urlSelector: e => e.closest("a")?.href?.substringBefore('?')
+            });
+            check(Target.Performer, "a[href*='/models/']:not(.filter):not([href*='#'])", {
+                observe: true,
+                urlSelector: e => e.closest("a")?.href?.substringBefore('?')
+            });
             break;
         }
         case "www.pornteengirl.com": {
