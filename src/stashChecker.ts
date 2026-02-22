@@ -575,7 +575,7 @@ export async function runStashChecker() {
                 urlSelector: _ => currentSite().substringBefore('?')
             });
 
-            check(Target.Scene, "a.playable:not(.artwork)[href*='/films/']", {
+            check(Target.Scene, "a.playable:not(.artwork):is([href*='/films/'],[href*='/massage/'],[href*='/sexed/'])", {
                 observe: true,
                 urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
                 titleSelector: e => directChildTextNode(e.querySelector('h4'))?.textContent?.trim(),
@@ -589,6 +589,18 @@ export async function runStashChecker() {
                 observe: true,
                 urlSelector: e => e.closest("a")?.href?.substringBefore('?')
             });
+			check(Target.Scene, "a.open-in-content-overlay:not(.playable):is([href*='/films/'],[href*='/massage/'])", {
+				observe: true,
+				urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+				titleSelector: e => e.querySelector('.details strong')?.textContent?.trim(),
+				displaySelector: e => e.querySelector('.details strong')
+			});
+			check(Target.Scene, "a[href*='/sexed/']:not(.playable)", {
+				observe: true,
+				urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+				titleSelector: e => (e.querySelector('.details strong') ?? e.closest('.item')?.querySelector('h5'))?.textContent?.trim(),
+				displaySelector: e => e.querySelector('.details strong') ?? e.closest('.item')?.querySelector('h5') as Element | undefined
+			});
             break;
         }
         case "www.pornteengirl.com": {
