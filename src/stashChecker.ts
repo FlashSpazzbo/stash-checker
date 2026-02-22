@@ -692,6 +692,46 @@ export async function runStashChecker() {
             });
             break;
         }
+		case "playboyplus.com":
+		case "members.playboyplus.com":
+		case "www.playboyplus.com": {
+			check(Target.Scene, "a[href*='/en/update/']:has(.Icon-Video)", {
+				observe: true,
+				urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+				titleSelector: e => e.querySelector('.Card-Info-Title')?.textContent?.trim(),
+				displaySelector: e => e.querySelector('.Card-Info-Title')
+			});
+			check(Target.Gallery, "a[href*='/en/update/']:has(.Icon-Picture)", {
+				observe: true,
+				urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+				titleSelector: e => e.querySelector('.Card-Info-Title')?.textContent?.trim(),
+				displaySelector: e => e.querySelector('.Card-Info-Title')
+			});
+			check(Target.Performer, "a[href*='/en/model/view/']", {
+				observe: true,
+				urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
+				nameSelector: e => e.querySelector('.ActorThumb-Card-Name-Text')?.textContent?.trim(),
+				displaySelector: e => e.querySelector('.ActorThumb-Card-Name-Text')
+			});
+			if (window.location.pathname.startsWith('/en/model/view/')) {
+				check(Target.Performer, "h1.Title", {
+					observe: true,
+					urlSelector: _ => currentSite().substringBefore('?')
+				});
+			}
+			// Note: <title> tag prepends "Pics from" and is unreliable - use h1 instead
+			if (window.location.pathname.startsWith('/en/update/')) {
+				check(Target.Scene, "h1.TitleBlock-Title", {
+					observe: true,
+					urlSelector: _ => currentSite().substringBefore('?')
+				});
+				check(Target.Gallery, "h1.TitleBlock-Title", {
+					observe: true,
+					urlSelector: _ => currentSite().substringBefore('?')
+				});
+			}
+			break;
+		}
         default:
             console.warn("No configuration for website found.");
             break;
