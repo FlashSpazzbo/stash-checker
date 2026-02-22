@@ -85,9 +85,22 @@ export async function runStashChecker() {
             let titleSelector = (e: Element) => directChildTextNode(e)?.textContent
             let sceneSelector = ".contentslist > a[href*='/ppv/'], .contentslist > a[href*='/month/'], .monthlylist > a[href*='/month/'], .sidemenu > a[href*='/ppv/']"
 
-            check(Target.Scene, sceneSelector, {observe: true, urlSelector: e => e.closest("a")?.href?.replace("/month/", "/ppv/"), displaySelector: displaySelector, titleSelector: titleSelector});
-            check(Target.Performer, ".sidemenu.actress > a[href*='/search/=/performerid=']", {observe: true, displaySelector: displaySelector, nameSelector: titleSelector});
-            check(Target.Group, ".serieslist > a[href*='/search/=/seriesid=']", {observe: true, displaySelector: displaySelector, nameSelector: titleSelector});
+            check(Target.Scene, sceneSelector, {
+                observe: true,
+                urlSelector: e => e.closest("a")?.href?.replace("/month/", "/ppv/"),
+                displaySelector: displaySelector,
+                titleSelector: titleSelector
+            });
+            check(Target.Performer, ".sidemenu.actress > a[href*='/search/=/performerid=']", {
+                observe: true,
+                displaySelector: displaySelector,
+                nameSelector: titleSelector
+            });
+            check(Target.Group, ".serieslist > a[href*='/search/=/seriesid=']", {
+                observe: true,
+                displaySelector: displaySelector,
+                nameSelector: titleSelector
+            });
             check(Target.Studio, ".newlabel a[href*='/ppv/']", {
                 observe: true,
                 displaySelector: e => directChildTextNode(e.querySelector("span")),
@@ -420,25 +433,25 @@ export async function runStashChecker() {
                 urlSelector: e => closestUrl(e)?.match(/\/model\/[^\/]+\/\d+$/)?.[0],
                 nameSelector: e => firstText(e)?.replace("porn", "")?.replace("videos", "")?.trim()
             });
-            check(Target.Performer, "h1", { nameSelector: e => firstText(e)?.replace("Free Amateur Porn - Hobby.porn", "").substringBefore("porn videos")?.trim()});
+            check(Target.Performer, "h1", {nameSelector: e => firstText(e)?.replace("Free Amateur Porn - Hobby.porn", "").substringBefore("porn videos")?.trim()});
             check(Target.Performer, "#tab_info > div.model-info > div > b");
-            check(Target.Scene, "h1[itemprop='name']", { urlSelector: currentSite });
-            check(Target.Scene, "div[class*='item item-video item-lozad'] a[href*='hobby.porn/video/'] div.title-holder", { observe: true });
+            check(Target.Scene, "h1[itemprop='name']", {urlSelector: currentSite});
+            check(Target.Scene, "div[class*='item item-video item-lozad'] a[href*='hobby.porn/video/'] div.title-holder", {observe: true});
             break;
         }
         case "www.pornhub.com": {
             check(Target.Performer, "[class*='pcVideoListItem'] a[href*='/model/'], [class*='pcVideoListItem'] a[href*='/pornstar/']");
-            check(Target.Performer, "h1[itemprop='name']", { urlSelector: currentSite });
+            check(Target.Performer, "h1[itemprop='name']", {urlSelector: currentSite});
             check(Target.Performer, "span.pornStarName.performerCardName, div.userCardNameBlock, span.usernameBadgesWrapper");
             check(Target.Performer, "div.modelVideosTitle, div.subHeaderOverrite > h2", {
                 urlSelector: currentSite,
                 nameSelector: e => firstText(e)?.substringBefore("'s")?.trim()
             });
             check(Target.Studio, "[class*='pcVideoListItem'] a[href*='/channels/']");
-            check(Target.Studio, "[id='channelsProfile'] h1", { urlSelector: currentSite });
-            check(Target.Scene, "div.videoUList span.title a[href*='/view_video.php?viewkey=']", { observe: true });
-            check(Target.Scene, "h1.title", { urlSelector: currentSite })
-            check(Target.Scene, "[class*='pcVideoListItem'] span.title a[href*='/view_video.php?viewkey=']", { observe: true })
+            check(Target.Studio, "[id='channelsProfile'] h1", {urlSelector: currentSite});
+            check(Target.Scene, "div.videoUList span.title a[href*='/view_video.php?viewkey=']", {observe: true});
+            check(Target.Scene, "h1.title", {urlSelector: currentSite})
+            check(Target.Scene, "[class*='pcVideoListItem'] span.title a[href*='/view_video.php?viewkey=']", {observe: true})
             break;
         }
         case "www.clips4sale.com": {
@@ -478,10 +491,13 @@ export async function runStashChecker() {
             break;
         }
         case "fansly.com": {
-            check(Target.Performer, "a.username-wrapper > div > span.display-name", {observe: true, urlSelector: currentSite});
+            check(Target.Performer, "a.username-wrapper > div > span.display-name", {
+                observe: true,
+                urlSelector: currentSite
+            });
             check(Target.Performer, "a.username-wrapper > div > span.user-name", {
                 urlSelector: _ => currentSite().replace("/^@/", "")
-        });
+            });
             break;
         }
         case "www.slayed.com":
@@ -492,7 +508,7 @@ export async function runStashChecker() {
         case "www.tushyraw.com":
         case "www.deeper.com":
         case "www.milfy.com":
-        case "www.wifey.com":{
+        case "www.wifey.com": {
             check(Target.Scene, 'a[data-test-component="TitleLink"]', {observe: true});
             check(Target.Scene, 'h1[data-test-component="VideoTitle"]', {observe: true});
             check(Target.Performer, "a[href*='/performers/']", {observe: true});
