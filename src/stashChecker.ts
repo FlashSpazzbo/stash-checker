@@ -537,9 +537,26 @@ export async function runStashChecker() {
         case "www.alsscan.com":
         case "www.rylskyart.com":
         case "www.eternaldesire.com": {
-            check(Target.Scene, "a[href*='/movie']:not(.tab)", {observe: true});
-            check(Target.Gallery, "a[href*='/gallery/']:not(.page-button)", {observe: true});
-            check(Target.Performer, "a[href*='/model/']:not([href*='/movie']):not([href*='/gallery/']):not(.page-button):not(.tab)", {observe: true});
+            check(Target.Scene, "a[href*='/movie']:not(.tab):not(:has(.update-stream-card))", {observe: true});
+            check(Target.Gallery, "a[href*='/gallery/']:not(.page-button):not(:has(.update-stream-card))", {observe: true});
+            check(Target.Performer, "a[href*='/model/']:not([href*='/movie']):not([href*='/gallery/']):not(.page-button):not(.tab):not(:has(.update-stream-card))", {observe: true});
+
+            const updateCardSelector = (e: Element) => e.querySelector('.card-information-title');
+            check(Target.Scene, "a[href*='/movie']:not(.tab):has(.update-stream-card)", {
+                observe: true,
+                titleSelector: e => updateCardSelector(e)?.textContent?.substringAfter(" - "),
+                displaySelector: updateCardSelector
+            });
+            check(Target.Gallery, "a[href*='/gallery/']:not(.page-button):has(.update-stream-card)", {
+                observe: true,
+                titleSelector: e => updateCardSelector(e)?.textContent?.substringAfter(" - "),
+                displaySelector: updateCardSelector
+            });
+            check(Target.Performer, "a[href*='/model/']:not([href*='/movie']):not([href*='/gallery/']):not(.page-button):not(.tab):has(.update-stream-card)", {
+                observe: true,
+                nameSelector: e => updateCardSelector(e)?.textContent?.substringBefore(" - "),
+                displaySelector: updateCardSelector
+            });
             break;
         }
         case "www.hegre.com": {
