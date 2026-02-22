@@ -529,7 +529,7 @@ export async function runStashChecker() {
         case "www.hegre.com": {
             check(Target.Scene, "a.playable:not(.artwork)[href*='/films/']", {
                 observe: true,
-                displaySelector: (e: Element) => Array.from(e.querySelector('h4')?.childNodes ?? []).find(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim()) as Element | undefined
+                displaySelector: e => Array.from(e.querySelector('h4')?.childNodes ?? []).find(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
             });
             check(Target.Gallery, "a[href*='/photos/']", {observe: true});
             check(Target.Performer, "a[href*='/models/']:not(.filter):not([href*='#'])", {observe: true});
