@@ -7,8 +7,10 @@
 
 ## [1.2.1]
 
-- Fix Javlibrary query and use actual title instead of code as title [#76]
+- Add support for websites: hegre.com [#77]
 - Add titles to xslist scene query
+- Fix Javlibrary query and use actual title instead of code as title [#76]
+- Fix Metart queries [#77]
 
 ## [1.2.0]
 
