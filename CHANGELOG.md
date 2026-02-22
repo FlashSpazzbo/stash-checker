@@ -1,16 +1,19 @@
 
 ## [WIP]
 
+## [1.2.2]
+
 - Setting for date formatting for release date and birthdate
+- Add support for hegre.com [#77]
 - Add career length to performer tooltip
 - Add tags to group and studio tooltips
+- Fix gallery graphql
+- Fix Metart queries [#77]
 
 ## [1.2.1]
 
-- Add support for websites: hegre.com [#77]
 - Add titles to xslist scene query
 - Fix Javlibrary query and use actual title instead of code as title [#76]
-- Fix Metart queries [#77]
 
 ## [1.2.0]
 
