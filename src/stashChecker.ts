@@ -543,17 +543,32 @@ export async function runStashChecker() {
             break;
         }
         case "www.hegre.com": {
+            check(Target.Scene, "#content-overlay .for-film .title > h1", {
+                observe: true,
+                urlSelector: _ => currentSite().substringBefore('?')
+            });
+            if (window.location.pathname.startsWith("/models/")) {
+                check(Target.Performer, ".profile > h2", {
+                    observe: true,
+                    urlSelector: _ => currentSite().substringBefore('?')
+                });
+            }
+            check(Target.Gallery, "#content-overlay .for-gallery .title > h1", {
+                observe: true,
+                urlSelector: _ => currentSite().substringBefore('?')
+            });
+
             check(Target.Scene, "a.playable:not(.artwork)[href*='/films/']", {
                 observe: true,
                 urlSelector: e => e.closest("a")?.href?.substringBefore('?'),
-                titleSelector: e => e.textContent,
+                titleSelector: e => directChildTextNode(e.querySelector('h4'))?.textContent?.trim(),
                 displaySelector: e => directChildTextNode(e.querySelector('h4'))
             });
-            check(Target.Gallery, "a[href*='/photos/']:not([href*='#'])", {
+            check(Target.Performer, "a[href*='/models/']:not(.filter):not([href*='#'])", {
                 observe: true,
                 urlSelector: e => e.closest("a")?.href?.substringBefore('?')
             });
-            check(Target.Performer, "a[href*='/models/']:not(.filter):not([href*='#'])", {
+            check(Target.Gallery, "a[href*='/photos/']:not([href*='#'])", {
                 observe: true,
                 urlSelector: e => e.closest("a")?.href?.substringBefore('?')
             });
